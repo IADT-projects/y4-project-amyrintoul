@@ -4,10 +4,10 @@
     "slug": "Frontend_MajorProject",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo_blue.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo_blue.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

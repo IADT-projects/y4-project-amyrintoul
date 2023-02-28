@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import Constants from 'expo-constants'
 //colours 
 export const Colours = { 
@@ -10,4 +10,19 @@ export const Colours = {
 
 }
 const {primary, secondary, purple, blue} = Colours;
+
+export const PageTitle = styled.Text`
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold; 
+    color: white; 
+    padding: 10px;
+`
+export const SubText = styled.Text`
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold; 
+    color: white; 
+    padding: 10px;
+`
 
