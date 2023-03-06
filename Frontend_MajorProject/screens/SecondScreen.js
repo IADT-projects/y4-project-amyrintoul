@@ -30,7 +30,7 @@ const SecondScreen = ({navigation}) => {
         <Image
         // style={styles.tinyLogo}
         style={styles.vanLogo}
-        source={require('../assets/VanSecondScreen.png')}
+        source={require('../assets/truck.png')}
         
       />
       <Text style={styles.welcomeText}>
@@ -96,8 +96,11 @@ const styles = StyleSheet.create({
         marginTop: 10
       },
       vanLogo: {
-        width: 280,
-        height: 210,
+        width: 500,
+        height: 280,
+        justifyContent: 'flex-end',
+        marginLeft: 150
+      
       },
       welcomeText: {
         fontSize: 35,

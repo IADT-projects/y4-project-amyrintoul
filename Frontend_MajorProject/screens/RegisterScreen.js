@@ -60,13 +60,21 @@ const RegisterScreen = ({navigation}) => {
       style={styles.button}
        onPress={() => Alert.alert('This is the login button')}
       >
-      <Text style={styles.text}>REGISTER</Text>
+      <Text style={styles.text}>Register</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-    <Text style={styles.loginNow}>Or Login</Text>
-    </TouchableOpacity>
+    
 
+    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25, width: 320, marginTop: 30 }}>
+            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
+            <View>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.loginNow}>Or Login</Text>
+            </TouchableOpacity>
+            </View>
+            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
+    </View>
+      
     
     </LinearGradient>
   
@@ -78,11 +86,11 @@ export default RegisterScreen
 
 const styles = StyleSheet.create({
     input: {
-        height: 50,
+        height: 55,
         margin: 11,
         padding: 10,
         width: 350,
-        borderRadius: 10,
+        borderRadius: 15,
         alignItems: 'center',
         backgroundColor: 'white'
       },
@@ -107,14 +115,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#213681',
         width: 350,
         height: 55,
-        borderRadius: 10,
+        borderRadius: 15,
         alignItems: 'center',
         marginTop: 30
       },
     
       loginNow: {
         color: 'white',
-        marginTop: 40,
+        width: 80,   
+        fontWeight: 'bold',
+        textAlign: 'center',
+
       }
 
      

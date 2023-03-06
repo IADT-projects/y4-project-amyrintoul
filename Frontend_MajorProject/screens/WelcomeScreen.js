@@ -24,11 +24,13 @@ const WelcomeScreen = ({navigation}) => {
         end={{x: 1, y: 1}}
         locations={[0, 0.22, 0.6, 1]}
     >
+      <View>
          <Image
         style={styles.logo}
         source={require('../assets/blueCar.png')}
         
       />
+      </View>
       <Text style={styles.welcomeText}>
             Why Get Your
             {'\n'}
@@ -92,8 +94,10 @@ const styles = StyleSheet.create({
         marginTop: 10
       },
       logo: {
-        width: 400,
-        height: 200,
+        width: 500,
+        height: 250,
+        justifyContent: 'flex-end',
+        marginLeft: 110
       },
       subText: {
         fontSize: 20,
@@ -104,13 +108,14 @@ const styles = StyleSheet.create({
       },
       welcomeText: {
         fontSize: 35,
-        marginTop: 20,
+        marginTop: 25,
         marginBottom: 15,
         fontWeight: 'bold', 
         color: 'white',
         textAlign: 'center'
 
-      }
+      },
+      
 
      
       
