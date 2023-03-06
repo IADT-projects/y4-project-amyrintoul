@@ -12,17 +12,25 @@ export const Colours = {
 const {primary, secondary, purple, blue} = Colours;
 
 export const PageTitle = styled.Text`
-    font-size: 30px;
+    font-size: 40px;
     text-align: center;
     font-weight: bold; 
     color: white; 
     padding: 10px;
 `
+
 export const SubText = styled.Text`
     font-size: 14px;
-    text-align: center;
+    margin-bottom: 5px;
     font-weight: bold; 
     color: white; 
-    padding: 10px;
+   
+`
+export const SubTextRegister = styled.Text`
+    font-size: 14px;
+    margin-bottom: 14px;
+    font-weight: bold; 
+    color: white; 
+    
 `
 
