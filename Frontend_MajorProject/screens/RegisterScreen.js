@@ -1,17 +1,12 @@
-import { SafeAreaView, 
-         StyleSheet, 
+import { StyleSheet, 
          TextInput,
-          Button, 
           Alert,
           View,
           Text,
-          Divider,
           TouchableOpacity,
-          Touchable
-        } from 'react-native'
+} from 'react-native'
 
 import React from 'react'
-
 import { PageTitle, SubTextRegister, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -21,7 +16,7 @@ const RegisterScreen = ({navigation}) => {
   const [password, setPassword] = React.useState('');
   
   return (
-           <LinearGradient
+    <LinearGradient
         // Background Linear Gradient
         style={styles.container}
         colors={["#0F0445","#1F317B", "#75BEF4", "#6A5BFF"]}
@@ -32,48 +27,46 @@ const RegisterScreen = ({navigation}) => {
          
         <PageTitle>Create An Account</PageTitle>
         <SubTextRegister>Please enter the details below!</SubTextRegister>
+
         <TextInput
-      style={styles.input}
-      onChangeText={text => setName(text)}
-      placeholder="Full Name"
-      value={name}
-    />
-    <TextInput
-      style={styles.input}
-      onChangeText={text => setEmail(text)}
-      placeholder="Email"
-      value={email}
-    />
+        style={styles.input}
+        onChangeText={text => setName(text)}
+        placeholder="Full Name"
+        value={name}
+        />
+
+        <TextInput
+          style={styles.input}
+          onChangeText={text => setEmail(text)}
+          placeholder="Email"
+          value={email}
+        />
      
-    <TextInput
-      style={styles.input}
-      onChangeText={text => setPassword(text)}
-      value={password}
-      placeholder="Password.."
-      secureTextEntry={true}
-    />
-   
-  
+        <TextInput
+          style={styles.input}
+          onChangeText={text => setPassword(text)}
+          value={password}
+          placeholder="Password.."
+          secureTextEntry={true}
+        />
 
-    <TouchableOpacity 
-      title="Register" 
-      style={styles.button}
-       onPress={() => Alert.alert('This is the login button')}
-      >
-      <Text style={styles.text}>Register</Text>
-    </TouchableOpacity>
+        <TouchableOpacity 
+          title="Register" 
+          style={styles.button}
+          onPress={() => Alert.alert('This is the login button')}
+          >
+          <Text style={styles.text}>Register</Text>
+        </TouchableOpacity>
 
-    
-
-    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25, width: 320, marginTop: 30 }}>
+        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25, width: 320, marginTop: 30 }}>
             <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
             <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.loginNow}>Or Login</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.loginNow}>Or Login</Text>
+              </TouchableOpacity>
             </View>
             <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
-    </View>
+        </View>
       
     
     </LinearGradient>

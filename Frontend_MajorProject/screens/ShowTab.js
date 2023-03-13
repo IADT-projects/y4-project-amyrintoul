@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import Tabs from '../navigation/tabs'
 
-const HomeScreen = () => {
+
+const ShowTab = () => {
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-    </View>
+      <Tabs/>
   )
 }
 
-export default HomeScreen
+export default ShowTab
 
 const styles = StyleSheet.create({
   container: {

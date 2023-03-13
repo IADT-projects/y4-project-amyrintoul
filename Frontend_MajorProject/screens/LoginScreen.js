@@ -1,59 +1,46 @@
-import { SafeAreaView, 
-         StyleSheet, 
+import { StyleSheet, 
          TextInput,
-          Alert,
           View,
           Text,
-          Divider,
           TouchableOpacity,
-          
-        } from 'react-native'
-
-import React from 'react'
-import { useState } from 'react';
+} from 'react-native'
+import React, { useContext, useState } from 'react'
 import { PageTitle, SubText, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from '../config/index';
+// import axios from '../config/index';
+import axios from 'axios'
+import { AntDesign } from '@expo/vector-icons';
 
 const LoginScreen = ({navigation}) => {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [values, setValues] = React.useState({
-      email: "",
-      password: ""
-  });
+    const [email, setEmail] = useState('rintoulamy7@gmail.com');
+    const [password, setPassword] = useState('password');
+   
+  //   const [values, setValues] = React.useState({
+  //     email: "",
+  //     password: ""
+  // });
     const [errorMessage, setErrorMessage] = useState("");
 
-    const handleForm = (text, eventName) => {
-      
+    
+    const submitForm = () => {
+      console.log("Email: ", email);
+      console.log("Password: ", password);
 
-
-      setValues(prevState => ({
-          ...prevState,
-          [eventName] : text
-      }));
+      axios.post('http://192.168.0.227:3000/api/users/login/', {
+              email: email,
+              password: password
+          })
+           .then((response) => {
+              console.log(response.data);
+              // setErrorMessage("");
+              // props.onAuthenticated(true, response.data.token);
+           })
+           .catch((err) => {
+              console.error(err);
+              // console.log(err.response.data);
+              // setErrorMessage(err.response.data.message);
+           });
   };
-
-  const submitForm = () => {
-    console.log("Email: ", form.email);
-    console.log("Password: ", form.password);
-
-    axios.post('/users/login', {
-            email: form.email,
-            password: form.password
-        })
-         .then((response) => {
-            console.log(response.data);
-            setErrorMessage("");
-            props.onAuthenticated(true, response.data.token);
-         })
-         .catch((err) => {
-            console.error(err);
-            console.log(err.response.data);
-            setErrorMessage(err.response.data.message);
-         });
-};
 
 
 
@@ -65,32 +52,38 @@ const LoginScreen = ({navigation}) => {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         locations={[0, 0.22, 0.6, 1]}>
-         
+        
+            
         <PageTitle>Login Now</PageTitle>
         <SubText>Sign in to your account!</SubText>
-      <View> 
-        <TextInput
-          style={styles.input}
-          onChangeText={text => setEmail(text)}
-          placeholder="Email"
-          value={email}
-          id='email'
-          required
-          
-        />          
-          
         
 
-        <TextInput
-          style={styles.input}
-          name="password"
-          type="password"
-          onChangeText={text => setPassword(text)}
-          placeholder="Password"
-          secureTextEntry={true} 
-          id="password"
-          value={password}  
-        />
+      <View> 
+        <View style={styles.sectionStyle}>
+            <AntDesign style={styles.iconStyle} name="mail" size={24} color="black" />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Email"
+              required
+              onChangeText={text => setEmail(text)}
+              underlineColorAndroid="transparent"
+            />
+        </View>
+      
+
+        <View style={styles.sectionStyle}>
+            <AntDesign style={styles.iconStyle} name="lock1" size={24} color="black" />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Password"
+              required
+              secureTextEntry={true}           
+              onChangeText={text => setPassword(text)}
+
+            />
+        </View>     
+          
+        
         
         <View>
             <Text style={styles.forgotPassword}>Forgot you password?</Text>
@@ -102,20 +95,18 @@ const LoginScreen = ({navigation}) => {
           onPress={submitForm}
           >
           <Text style={styles.text}>Login</Text>
-        </TouchableOpacity>
-
-        
+        </TouchableOpacity> 
 
         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25, width: 320, marginLeft: 24 }}>
-            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
+            <View style={{flex: 1, height: 2, backgroundColor: '#213681'}} />
             <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerNow}>Or Register</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text style={styles.registerNow}>Or Register</Text>
+              </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
+            <View style={{flex: 1, height: 2, backgroundColor: '#213681'}} />
         </View>
-      </View>
+    </View>
     
   </LinearGradient>
   
@@ -126,15 +117,7 @@ const LoginScreen = ({navigation}) => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
-    input: {
-        height: 55,
-        margin: 10,
-        padding: 10,
-        width: 350,
-        borderRadius: 15,
-        alignItems: 'center',
-        backgroundColor: 'white'
-      },
+    
       title: {
         textAlign: 'center',
         marginVertical: 5,
@@ -145,7 +128,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       text: {
-        fontSize: 16,
+        fontSize: 18,
         color: 'white',
         marginTop: 20,
         fontWeight: 'bold'
@@ -154,7 +137,7 @@ const styles = StyleSheet.create({
       button: {
         backgroundColor: '#213681',
         width: 350,
-        height: 55,
+        height: 60,
         borderRadius: 15,
         alignItems: 'center',
         marginTop: 10,
@@ -171,7 +154,37 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: 100,   
         fontWeight: 'bold'
-      }
+      },
+      passwordContainer: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: '#000',
+        paddingBottom: 10,
+      },
+      sectionStyle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        height: 60,
+        width: 350,
+        borderRadius: 15,
+        margin: 10,
+      },
+      iconStyle: {
+        padding: 1,
+        height: 25,
+        width: 25,
+        alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 5
+      },
+      logo: {
+        width: 200,
+        height: 100,
+        justifyContent: 'flex-end',
+        marginBottom: 20
+      },
 
      
       
