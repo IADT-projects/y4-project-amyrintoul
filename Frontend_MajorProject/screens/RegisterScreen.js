@@ -9,6 +9,8 @@ import { StyleSheet,
 import React from 'react'
 import { PageTitle, SubTextRegister, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = React.useState('');
@@ -28,32 +30,52 @@ const RegisterScreen = ({navigation}) => {
         <PageTitle>Create An Account</PageTitle>
         <SubTextRegister>Please enter the details below!</SubTextRegister>
 
-        <TextInput
-        style={styles.input}
-        onChangeText={text => setName(text)}
-        placeholder="Full Name"
-        value={name}
-        />
+        <View> 
+          <View style={styles.sectionStyle}>
+            <Ionicons style={styles.iconStyle} name="person" size={24} color="black" />
+              <TextInput
+                style={{flex: 1}}
+                placeholder="Full Name"
+                required
+                onChangeText={text => setName(text)}
+                underlineColorAndroid="transparent"
+                value={name}
 
-        <TextInput
-          style={styles.input}
-          onChangeText={text => setEmail(text)}
-          placeholder="Email"
-          value={email}
-        />
+              />
+          </View>
+
+          <View style={styles.sectionStyle}>
+            <AntDesign style={styles.iconStyle} name="mail" size={24} color="black" />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Email"
+              required
+              onChangeText={text => setEmail(text)}
+              underlineColorAndroid="transparent"
+            />
+        </View>
+      
+
+        <View style={styles.sectionStyle}>
+            <AntDesign style={styles.iconStyle} name="lock1" size={24} color="black" />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Password"
+              required
+              secureTextEntry={true}           
+              onChangeText={text => setPassword(text)}
+
+            />
+        </View>     
+        </View>
+       
      
-        <TextInput
-          style={styles.input}
-          onChangeText={text => setPassword(text)}
-          value={password}
-          placeholder="Password.."
-          secureTextEntry={true}
-        />
+        
 
         <TouchableOpacity 
           title="Register" 
           style={styles.button}
-          onPress={() => Alert.alert('This is the login button')}
+          onPress={() => Alert.alert('This is the register button')}
           >
           <Text style={styles.text}>Register</Text>
         </TouchableOpacity>
@@ -78,15 +100,7 @@ const RegisterScreen = ({navigation}) => {
 export default RegisterScreen
 
 const styles = StyleSheet.create({
-    input: {
-        height: 55,
-        margin: 11,
-        padding: 10,
-        width: 350,
-        borderRadius: 15,
-        alignItems: 'center',
-        backgroundColor: 'white'
-      },
+   
       title: {
         textAlign: 'center',
         marginVertical: 5,
@@ -119,7 +133,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
 
-      }
+      },
+      sectionStyle: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        height: 60,
+        width: 350,
+        borderRadius: 15,
+        margin: 10,
+      },
+      iconStyle: {
+        padding: 1,
+        height: 25,
+        width: 25,
+        alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 5
+      },
 
      
       

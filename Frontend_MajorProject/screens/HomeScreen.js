@@ -8,15 +8,16 @@ import { Ionicons } from '@expo/vector-icons';
 const HomeScreen = () => {
   return (
     <SafeAreaProvider style={styles.container}>
-        <StatusBar style='dark-content'/>
-        <View
+      <StatusBar style='dark-content'/>
+      <View
           style={{
             width: '100%',
             marginTop: 45,
             padding: 10,
            
           }}
-        > 
+        >   
+          {/* .....WELCOME TEXT......  */}
             <Text 
               style={{
                 fontSize: 26, 
@@ -28,7 +29,7 @@ const HomeScreen = () => {
             >
               Hi Christine,{'\n'}Welcome Back!
             </Text>
-
+            {/* .....CARD...... */}
             <View
               style={{
                 flexDirection: 'row', 
