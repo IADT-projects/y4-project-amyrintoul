@@ -32,12 +32,12 @@ const LoginScreen = ({navigation}) => {
           })
            .then((response) => {
               console.log(response.data);
-              // setErrorMessage("");
+               setErrorMessage("");
               // props.onAuthenticated(true, response.data.token);
            })
            .catch((err) => {
               console.error(err);
-              // console.log(err.response.data);
+              //  console.log(err.response.data);
               // setErrorMessage(err.response.data.message);
            });
   };
@@ -98,13 +98,13 @@ const LoginScreen = ({navigation}) => {
         </TouchableOpacity> 
 
         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25, width: 320, marginLeft: 24 }}>
-            <View style={{flex: 1, height: 2, backgroundColor: '#213681'}} />
+            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
             <View>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                 <Text style={styles.registerNow}>Or Register</Text>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 1, height: 2, backgroundColor: '#213681'}} />
+            <View style={{flex: 1, height: 2, backgroundColor: '#F89AEE'}} />
         </View>
     </View>
     

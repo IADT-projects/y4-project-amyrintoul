@@ -1,4 +1,5 @@
 import React, {createContext} from 'react'
+import axios from '../config/index'
 
 export const AuthContext = createContext();
 

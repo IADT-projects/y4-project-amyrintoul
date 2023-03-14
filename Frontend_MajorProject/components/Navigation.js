@@ -27,7 +27,7 @@ export default function Navigation() {
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
             <Stack.Screen name="SecondScreen" component={SecondScreen} />
             <Stack.Screen  name="Login" component={LoginScreen}  />
-            <Stack.Screen name="Home" component={HomeScreen} />
+            
             <Stack.Screen name="Register" component={RegisterScreen} /> 
             
             </Stack.Navigator>}
