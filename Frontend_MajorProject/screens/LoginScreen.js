@@ -3,7 +3,7 @@ import { StyleSheet,
           View,
           Text,
           TouchableOpacity,
-} from 'react-native'
+        } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { PageTitle, SubText, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';

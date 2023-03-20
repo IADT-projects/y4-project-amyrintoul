@@ -27,9 +27,8 @@ const WelcomeScreen = ({navigation}) => {
       <View>
          <Image
         style={styles.logo}
-        source={require('../assets/blueCar.png')}
-        
-      />
+        source={require('../assets/blueCar.png')} 
+        />
       </View>
       <Text style={styles.welcomeText}>
             Why Get Your
