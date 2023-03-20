@@ -3,43 +3,51 @@ import ReportScreen from "../screens/ReportScreen";
 import AppointmentScreen from "../screens/AppointmentScreen";
 import ChatScreen from "../screens/ChatScreen";
 import { AntDesign } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "../screens/HomeScreen";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
+import { StatusBar} from "expo-status-bar";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import AnotherScreen from "../screens/AnotherScreen";
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({children, onPress}) => (
-  <TouchableOpacity
-    style={{
-      top: -30,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-    onPress={{onPress}}
-    >
-      <View style={{
-        width: 50,
-        height: 50,
-        borderRadius: 15,
-        backgroundColor: '#6A5BFF',
-      }}>
-        {children}
-      </View>
 
-  </TouchableOpacity>
-);
+const showAlert = () =>
+  Alert.alert(
+    'Confirm Logout',
+    'Are you sure you want to logout?',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => Alert.alert('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => Alert.alert('Yes'),
+        style: 'Yes',
+      },
+    ],
+    {
+      cancelable: true,
+      onDismiss: () =>
+        Alert.alert(
+          'This alert was dismissed by tapping outside of the alert dialog.',
+        ),
+    },
+  );
+
+ 
+
+
 
 const Tabs = () => {
   return (
     
-      
     
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -53,7 +61,7 @@ const Tabs = () => {
           elevation: 0, 
           backgroundColor: '#ffffff',
           borderRadius: 15,
-          height: 90,
+          height: 80,
           ...styles.shadow
         }
       }}>
@@ -75,14 +83,28 @@ const Tabs = () => {
           ),
         }}/>
       <Tab.Screen name='Appointment' component={AppointmentScreen}
+      
          options={{
           headerTitle: 'Book An Appointment',
+          
           tabBarIcon: ({ size, focused}) => (
-             <AntDesign name="plus" size={size} style={{color: focused ? '#6A5BFF' : '#ffffff'}} />  
+            <View style={{ width: 50,
+              height: 50,
+              borderRadius: 30,
+              backgroundColor: '#6A5BFF',}}>
+             <AntDesign name="plus" size={size} style={{color: focused ? '#ffffff' : '#ffffff', marginLeft: 13, marginTop: 12}} /> 
+            </View>
           ),
-          tabBarButton: (props) => (
-            <CustomTabBarButton {...props} />
-          )
+          tabBarButton: (props) => 
+          <TouchableOpacity {...props}
+          style={{
+            top: -30,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+                  
+          />         
+          
         }} />
       <Tab.Screen name='Chat' component={ChatScreen} options={{ 
         tabBarIcon: ({focused,  size}) => (
@@ -93,13 +115,19 @@ const Tabs = () => {
         ),
         }}
       />
-      <Tab.Screen name='Logout' component={AnotherScreen} options={{ 
+      <Tab.Screen name='Logout' component={ChatScreen} options={{ 
         tabBarIcon: ({focused,  size}) => (
           <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
              <SimpleLineIcons name="logout" size={size} style={{color: focused ? '#6A5BFF' : '#748c94'}}/>
             
           </View>
         ),
+        tabBarButton: (props) => 
+          <TouchableOpacity {...props}
+          onPress={showAlert}
+          
+                  
+          />         
         }}
       />
 

@@ -4,11 +4,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaProvider style={styles.container}>
-      <StatusBar style='dark-content'/>
+    <ScrollView
+          indicatorStyle="black"
+    >
+  
+     <StatusBar style='dark-content'/>
       <View
           style={{
             width: '100%',
@@ -78,42 +84,40 @@ const HomeScreen = () => {
                   Upcoming Appointments
               </Text>
               <View
-              style={{
-                flexDirection: 'row', 
-                justifyContent: 'space-between',
-                borderRadius: '20',  
-                alignItems: 'center',
-                padding: 20,
-                marginTop: 20,
-                borderWidth: '0.2',
-                borderColor: '#748c94'
-                
-                
-            
-              }}
-            >  
-              <View>
+                style={{
+                  flexDirection: 'row', 
+                  justifyContent: 'space-between',
+                  borderRadius: '20',  
+                  alignItems: 'center',
+                  padding: 20,
+                  marginTop: 20,
+                  borderWidth: '0.2',
+                  borderColor: '#748c94'
+                }}
+              >  
+                <View>
 
-                <Text style={{color: 'black',fontSize: 16, fontWeight: '500', marginBottom: 5}}>
-                     Appointment with John
-                </Text>
-                <Text>13:00PM - 15:00</Text>
+                  <Text style={{color: 'black',fontSize: 16, fontWeight: '500', marginBottom: 5}}>
+                      Appointment with John
+                  </Text>
+                  <Text>13:00PM - 15:00</Text>
+                </View>
+                <View
+                  style={{
+                    borderRadius: '10',  
+                    backgroundColor: '#6A5BFF',
+                    alignItems: 'center',
+                    padding: 10,
+                    marginRight: 5
+                  }}
+                >
+                  <Text style={styles.dateText}>12</Text>
+                  <Text style={styles.dateText}>Nov</Text>
+                </View>
               </View>
-              <View
-              style={{
-                borderRadius: '10',  
-                backgroundColor: '#6A5BFF',
-                alignItems: 'center',
-                padding: 10,
-                marginRight: 5
-              }}
-              >
-                <Text style={styles.dateText}>12</Text>
-                <Text style={styles.dateText}>Nov</Text>
-              </View>
-            </View>
             
            </View>
+              {/* ..........MEET THE TEAM............ */}
            <View
               style={{
                 width: '100%',
@@ -121,14 +125,76 @@ const HomeScreen = () => {
               }}
             >
               <Text 
-              style={{
-                fontSize: 18, 
-                fontWeight: 500, 
-                letterSpacing: 1, 
-                marginTop: 10,
-                }}>
+                style={{
+                  fontSize: 18, 
+                  fontWeight: 500, 
+                  letterSpacing: 1, 
+                  marginTop: 10,
+                  }}
+              >
                   Meet The Team
               </Text>
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View >
+                <TouchableOpacity
+                      onPress={() => navigation.navigate('Appointment')}
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Image
+                        source={require('../assets/mechanic1.png')} 
+                        resizeMode='contain'
+                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
+                      />
+                    
+                        <Text style={{marginTop: 10, fontWeight: 500}}>Danny Ryan</Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Appointment')}
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Image
+                      resizeMode='contain'
+                      source={require('../assets/mechanic1.png')} 
+                      
+                      style={{ marginTop:10, backgroundColor: '#213681', borderRadius: 15}} 
+                    />
+                  
+                      <Text style={{marginTop: 10,  fontWeight: 500}}>John Adams</Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                      onPress={() => navigation.navigate('Appointment')}
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Image
+                        source={require('../assets/mechanic1.png')} 
+                        resizeMode='contain'
+                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
+                      />
+                    
+                        <Text style={{marginTop: 10, fontWeight: 500}}>Danny Ryan</Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                      onPress={() => navigation.navigate('Appointment')}
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Image
+                        source={require('../assets/mechanic1.png')} 
+                        resizeMode='contain'
+                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
+                      />
+                    
+                        <Text style={{marginTop: 10, fontWeight: 500}}>John Jamie</Text>
+                  </TouchableOpacity>
+                </View>
+                
+              </View>
            </View>
 
            {/* ..........SERVICE............ */}
@@ -145,52 +211,179 @@ const HomeScreen = () => {
                 letterSpacing: 1, 
                 marginTop: 10,
                 }}>
-                  Choose A service
+                  Choose a service
               </Text>
            </View>
            {/* /////////////..GOLD..///////////// */}
-           <View
-              style={{
-                flexDirection: 'row', 
-                justifyContent: 'space-between',
-                backgroundColor: '#213681',
-                borderRadius: '20',  
-                alignItems: 'center',
-                padding: 20,
-                marginTop: 10
-                
-                
+          <View 
+           style={{
+            backgroundColor: '#213681', 
+            borderRadius: '20',  
+            padding: 20,
+            marginTop: 10
             
-              }}
-            >  
-              <View>
-                <Text style={{color: 'white', fontWeight: '500'}}>GOLD</Text>
-              </View>
-              
-            </View>
-            {/* /////////////..SILVER..///////////// */}
+            }}
+          >
             <View
               style={{
                 flexDirection: 'row', 
-                justifyContent: 'space-between',
-                borderRadius: '20',  
-                borderWidth: 0.2,
                 alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25}}>Premium</Text>
+              <MaterialCommunityIcons name="podium-gold" size={32} color="white" style={{marginRight: 12}} />
+            </View>
+            <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 15,
+                  marginLeft: 12
+                }}
+            > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
+                <Text style={{color: 'white', marginLeft: 10}}>100 Point check over</Text>
+            </View>
+            <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+            > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
+                <Text style={{color: 'white', marginLeft: 10}}>Diagnostic scan/ health check</Text>
+                
+            </View>
+            <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+            > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
+                <Text style={{color: 'white', marginLeft: 10}}>12v battery health check</Text>
+                
+            </View>
+            <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+            > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
+                <Text style={{color: 'white', marginLeft: 10}}>30 mins test drive including motorway.</Text>
+                
+            </View>
+            <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25, marginTop: 10}}>€180</Text>
+            <TouchableOpacity 
+                title="Login" 
+                style={styles.button}
+                >
+                <Text style={styles.text}>Get Started</Text>
+              </TouchableOpacity> 
+            
+          </View>
+
+            {/* /////////////..SILVER..///////////// */}
+            <View
+              style={{
+                borderRadius: '20',  
                 padding: 20,
                 marginTop: 20,
+                borderWidth: '0.3'
                 
                 
             
               }}
             >  
-            <View>
-              <Text style={{color: 'black', fontWeight: '500'}}>SILVER</Text>
-            </View>
+              <View
+              style={{
+                flexDirection: 'row', 
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              >
+              <Text style={{color: 'black', fontWeight: '600',marginLeft: 12, fontSize: 25}}>Elite</Text>
+              <MaterialCommunityIcons name="podium-silver" size={30} color="black" style={{marginRight: 12}} />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 15,
+                  marginLeft: 12
+                }}
+              > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#6A5BFF" />
+                <Text style={{ marginLeft: 10}}>Basic 50 point check</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginLeft: 12,
+                  marginTop: 5,
+                }}
+              > 
+                <Ionicons name="ios-shield-checkmark" size={20} color="#6A5BFF" />
+                <Text style={{ marginLeft: 10}}>Road Test Drive</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+              > 
+                <Ionicons name="close-circle" size={20} color="#cc0000" />
+                <Text style={{ marginLeft: 10}}>12v Battery health check</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+              > 
+              <Ionicons name="close-circle" size={20} color="#cc0000" />
+                <Text style={{ marginLeft: 10}}>Diagnostic Scan / Health Scan</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row', 
+                  alignItems: 'center',
+                  marginTop: 5,
+                  marginLeft: 12
+                }}
+              > 
+                <Ionicons name="close-circle" size={20} color="#cc0000" />
+                <Text style={{ marginLeft: 10}}>Motorway test drive</Text>
+              </View>
+              <Text style={{color: 'black', fontWeight: '600',marginLeft: 12, fontSize: 25, marginTop: 10}}>€100</Text>
+              
+              <TouchableOpacity 
+                title="Get S" 
+                style={styles.buttonElite}
+                >
+                <Text style={styles.text}>Get Started</Text>
+              </TouchableOpacity> 
+
             </View>
             
            
-           
-      </View>    
+      
+      </View> 
+         </ScrollView>
     </SafeAreaProvider>
   )
 }
@@ -200,7 +393,10 @@ export default HomeScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  
     
   },
   shadow: {
@@ -218,7 +414,16 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#75BEF4',
     width: 350,
-    height: 60,
+    height: 55,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginTop: 10,
+    marginLeft:  10
+  },
+  buttonElite: {
+    backgroundColor: '#6A5BFF',
+    width: 350,
+    height: 55,
     borderRadius: 15,
     alignItems: 'center',
     marginTop: 10,
@@ -227,7 +432,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: 'white',
-    marginTop: 20,
+    marginTop: 17,
     fontWeight: 'bold'
     
   },

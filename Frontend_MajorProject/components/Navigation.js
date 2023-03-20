@@ -19,8 +19,9 @@ export default function Navigation() {
         {/* if logged in is true, show homepage otherwise show the other screns */}
 
 
-        {isLoggedin ? <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="ShowTab" component={ShowTab} />
+        {isLoggedin ? 
+        <Stack.Navigator initialRouteName="Root" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Root" component={ShowTab} />
         </Stack.Navigator> : 
         <Stack.Navigator screenOptions={{headerShown: false}}>
 

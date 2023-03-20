@@ -7,7 +7,6 @@ import Tabs from '../navigation/tabs'
 const ShowTab = () => {
   return (
       <Tabs/>
-
   )
 }
 
