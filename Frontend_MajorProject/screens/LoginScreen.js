@@ -7,21 +7,38 @@ import { StyleSheet,
 import React, { useContext, useState } from 'react'
 import { PageTitle, SubText, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-// import axios from '../config/index';
 import axios from 'axios'
 import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const LoginScreen = ({navigation}) => {
+
+const LoginScreen = ({navigation, onisLoggedin}) => {
     const [email, setEmail] = useState('rintoulamy7@gmail.com');
     const [password, setPassword] = useState('password');
    
-  //   const [values, setValues] = React.useState({
-  //     email: "",
-  //     password: ""
-  // });
+
     const [errorMessage, setErrorMessage] = useState("");
 
-    
+    const handleForm = (e) => {
+      let name = e.target.name;
+      let value = e.target.value;
+      console.log(`${name}: ${value}`);
+
+      // setForm((prevState) => {
+      //     return {
+      //         ...prevState,
+      //         [name]: value
+      //     }
+      // });
+
+      setForm(prevState => ({
+          ...prevState,
+          [name]: value
+      }))
+      
+  };
+
     const submitForm = () => {
       console.log("Email: ", email);
       console.log("Password: ", password);
@@ -30,16 +47,18 @@ const LoginScreen = ({navigation}) => {
               email: email,
               password: password
           })
-           .then((response) => {
-              console.log(response.data);
-               setErrorMessage("");
-              // props.onAuthenticated(true, response.data.token);
-           })
-           .catch((err) => {
-              console.error(err);
-              //  console.log(err.response.data);
-              // setErrorMessage(err.response.data.message);
-           });
+          .then((response) => {
+            console.log(response.data);
+            setErrorMessage("");
+            onisLoggedin(true, response.data.token);
+        })
+        .catch((err) => {
+            console.error(err);
+            console.log(err.response.data);
+            setErrorMessage(err.response.data.message);
+        
+        });
+
   };
 
 
@@ -60,25 +79,25 @@ const LoginScreen = ({navigation}) => {
 
       <View> 
         <View style={styles.sectionStyle}>
-            <AntDesign style={styles.iconStyle} name="mail" size={24} color="black" />
+            <MaterialCommunityIcons name="email-outline" size={20} color="grey"style={styles.iconStyle} />
             <TextInput
               style={{flex: 1}}
               placeholder="Email"
               required
-              onChangeText={text => setEmail(text)}
+               onChange={handleForm}
               underlineColorAndroid="transparent"
             />
         </View>
       
 
         <View style={styles.sectionStyle}>
-            <AntDesign style={styles.iconStyle} name="lock1" size={24} color="black" />
+        <Feather name="lock" size={20} color="grey"style={styles.iconStyle} />
             <TextInput
               style={{flex: 1}}
               placeholder="Password"
               required
               secureTextEntry={true}           
-              onChangeText={text => setPassword(text)}
+              onChange={handleForm}
 
             />
         </View>     
@@ -177,7 +196,7 @@ const styles = StyleSheet.create({
         width: 25,
         alignItems: 'center',
         marginLeft: 10,
-        marginRight: 5
+      
       },
       logo: {
         width: 200,

@@ -5,18 +5,46 @@ import { StyleSheet,
           Text,
           TouchableOpacity,
 } from 'react-native'
-
+import axios from 'axios'
 import React from 'react'
 import { PageTitle, SubTextRegister, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const RegisterScreen = ({navigation}) => {
+
+
+const RegisterScreen = ({navigation, props}) => {
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
   
+
+  const submitForm = () => {
+    console.log("Name: ", name);
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+    
+
+
+    axios.post('/users/register', {
+            name: name,
+            email: email,
+            password: password
+            
+        })
+         .then((response) => {
+            console.log(response.data);
+            setErrorMessage("");
+            props.onAuthenticated(true, response.data.token);
+         })
+         .catch((err) => {
+            console.error(err);
+            // console.log(err.response.data);
+            // setErrorMessage(err.response.data.message);
+         });
+};
   return (
     <LinearGradient
         // Background Linear Gradient
@@ -32,7 +60,7 @@ const RegisterScreen = ({navigation}) => {
 
         <View> 
           <View style={styles.sectionStyle}>
-            <Ionicons style={styles.iconStyle} name="person" size={24} color="black" />
+            <Ionicons style={styles.iconStyle} name="person" size={20} color="grey" />
               <TextInput
                 style={{flex: 1}}
                 placeholder="Full Name"
@@ -45,7 +73,7 @@ const RegisterScreen = ({navigation}) => {
           </View>
 
           <View style={styles.sectionStyle}>
-            <AntDesign style={styles.iconStyle} name="mail" size={24} color="black" />
+           <MaterialCommunityIcons name="email-outline" size={20} color="grey"style={styles.iconStyle} />
             <TextInput
               style={{flex: 1}}
               placeholder="Email"
@@ -57,7 +85,7 @@ const RegisterScreen = ({navigation}) => {
       
 
         <View style={styles.sectionStyle}>
-            <AntDesign style={styles.iconStyle} name="lock1" size={24} color="black" />
+            <Feather name="lock" size={20} color="grey"style={styles.iconStyle} />
             <TextInput
               style={{flex: 1}}
               placeholder="Password"
@@ -75,7 +103,7 @@ const RegisterScreen = ({navigation}) => {
         <TouchableOpacity 
           title="Register" 
           style={styles.button}
-          onPress={() => Alert.alert('This is the register button')}
+          onPress={submitForm}
           >
           <Text style={styles.text}>Register</Text>
         </TouchableOpacity>
@@ -150,7 +178,7 @@ const styles = StyleSheet.create({
         width: 25,
         alignItems: 'center',
         marginLeft: 10,
-        marginRight: 5
+        
       },
 
      

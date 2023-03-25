@@ -5,15 +5,24 @@ import ChatScreen from "../screens/ChatScreen";
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from "../screens/HomeScreen";
-import { StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Alert, Image} from "react-native";
 import { StatusBar} from "expo-status-bar";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import AnotherScreen from "../screens/AnotherScreen";
 
 const Tab = createBottomTabNavigator();
 
+function LogoTitle() {
+  return (
+    <Text style={{color:'white',fontWeight: 'bold',
+    fontSize: 35}}>Mechanic{'\n'}    Profile</Text>
+  
+  );
+}
 
-const showAlert = () =>
+const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
+
+  const showAlert = () => 
   Alert.alert(
     'Confirm Logout',
     'Are you sure you want to logout?',
@@ -25,7 +34,7 @@ const showAlert = () =>
       },
       {
         text: 'Yes',
-        onPress: () => Alert.alert('Yes'),
+        onPress: () => onisLoggedin(false),
         style: 'Yes',
       },
     ],
@@ -38,11 +47,7 @@ const showAlert = () =>
     },
   );
 
- 
 
-
-
-const Tabs = () => {
   return (
     
     
@@ -53,19 +58,22 @@ const Tabs = () => {
         tabBarShowLabel: false,
         tabBarActiveTintColor: '#6A5BFF',
         tabBarStyle: {
-          position: 'absolute',
+          position: 'relative',
+          
           tabBarActiveTintColor: '#6A5BFF',
-          bottom: 40,
-          left: 20,
-          right: 20,
-          elevation: 0, 
+          // marginTop: 30,
+          // bottom: 40,
+          // left: 20,
+          // right: 20,
+          // elevation: 0, 
           backgroundColor: '#ffffff',
-          borderRadius: 15,
-          height: 80,
+          // borderRadius: 15,
+          // height: 80,
           ...styles.shadow
         }
       }}>
-        <Tab.Screen name='Home' component={HomeScreen}  
+        
+        <Tab.Screen name='Home' children={() => <HomeScreen isLoggedin={isLoggedin} isMechanic={isMechanic}  />} 
           options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size, focused }) => (
@@ -74,6 +82,7 @@ const Tabs = () => {
             </View>
           ),
         }}/>
+        
       <Tab.Screen name='Reports' component={ReportScreen}  
           options={{
           tabBarIcon: ({ color, size, focused}) => (
@@ -81,6 +90,7 @@ const Tabs = () => {
              <AntDesign name="filetext1" size={size} style={{color: focused ? '#6A5BFF' : '#748c94'}} />  
             </View>       
           ),
+  
         }}/>
       <Tab.Screen name='Appointment' component={AppointmentScreen}
       
@@ -98,7 +108,7 @@ const Tabs = () => {
           tabBarButton: (props) => 
           <TouchableOpacity {...props}
           style={{
-            top: -30,
+            top: -25,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -106,13 +116,23 @@ const Tabs = () => {
           />         
           
         }} />
-      <Tab.Screen name='Chat' component={ChatScreen} options={{ 
+      <Tab.Screen name='Chat' component={AnotherScreen} options={{ 
         tabBarIcon: ({focused,  size}) => (
           <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
              <Ionicons name="chatbox-ellipses-outline" size={size} style={{color: focused ? '#6A5BFF' : '#748c94'}}/>
             
           </View>
         ),
+        headerShown: true,
+        headerTitle: (props) => <LogoTitle {...props} />,
+        headerStyle: {
+            backgroundColor: '#213681',
+            borderRadius: 2,
+            height: 220,
+            borderBottomRightRadius: 3000,
+            borderBottomLeftRadius: 3000,
+          },
+          headerTintColor: '#fff',
         }}
       />
       <Tab.Screen name='Logout' component={ChatScreen} options={{ 
@@ -122,6 +142,7 @@ const Tabs = () => {
             
           </View>
         ),
+        
         tabBarButton: (props) => 
           <TouchableOpacity {...props}
           onPress={showAlert}

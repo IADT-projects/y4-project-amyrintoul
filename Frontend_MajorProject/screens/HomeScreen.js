@@ -5,9 +5,14 @@ import { StatusBar } from 'expo-status-bar'
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Divider } from 'react-native-elements'
 
-const HomeScreen = ({navigation}) => {
+
+
+
+const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
+
   return (
     <SafeAreaProvider style={styles.container}>
     <ScrollView
@@ -96,11 +101,42 @@ const HomeScreen = ({navigation}) => {
                 }}
               >  
                 <View>
+                  <View style={{flexDirection: 'row' }}> 
+                    <Text style={{fontSize: 18, fontWeight: '500',}}>Mechanic: </Text>
+                    <Text style={{marginLeft: 5, fontSize: 18, fontWeight: '300',}}>Danny Ryan</Text>
+                  </View>
 
-                  <Text style={{color: 'black',fontSize: 16, fontWeight: '500', marginBottom: 5}}>
-                      Appointment with John
+
+                  <View style={{flexDirection: 'row', marginTop: 5}}>
+                    <View style={{flexDirection: 'row', marginTop: 5}}>
+                      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 5, }}>
+                        Make: 
+                      </Text>
+                      <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5, marginLeft: 5 }}>
+                        Audi A1.
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 8}}>
+                      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 5, }}>
+                        Reg: 
+                      </Text>
+                      <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5, marginLeft: 5 }}>
+                        131-D-29019.
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 5}}>
+                    Service: 
                   </Text>
-                  <Text>13:00PM - 15:00</Text>
+                  <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5}}> Elite</Text>
+                  </View>
+                  <Divider style={{ backgroundColor: 'blue', marginTop: 5, marginBottom: 5 }} />
+
+                  <View flexDirection="row">
+                  <AntDesign name="clockcircle" size={14} color="#6A5BFF" style={{marginTop: 1, marginRight: 3,}}/>  
+                  <Text style={{color: '#6A5BFF', fontWeight: 400, fontSize: 14}}>12:00am, 40mins</Text>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -142,26 +178,26 @@ const HomeScreen = ({navigation}) => {
               >
                 <View >
                 <TouchableOpacity
-                      onPress={() => navigation.navigate('Appointment')}
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                    title="Mechanic"
+                    onPress={() => navigation.navigate('AnotherScreen')} 
+                     style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Image
                         source={require('../assets/mechanic1.png')} 
-                        resizeMode='contain'
-                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
+                        resizeMode='cover'
+                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15, width: 120 ,height: 150}} 
                       />
-                    
                         <Text style={{marginTop: 10, fontWeight: 500}}>Danny Ryan</Text>
                   </TouchableOpacity>
                 </View>
                 <View>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('Appointment')}
+                    onPress={() => navigation.navigate('AnotherScreen')}
                     style={{justifyContent: 'center', alignItems: 'center'}}>
                     <Image
                       resizeMode='contain'
                       source={require('../assets/mechanic1.png')} 
                       
-                      style={{ marginTop:10, backgroundColor: '#213681', borderRadius: 15}} 
+                      style={{ marginTop:10, backgroundColor: '#213681', borderRadius: 15,width: 120 ,height: 150}} 
                     />
                   
                       <Text style={{marginTop: 10,  fontWeight: 500}}>John Adams</Text>
@@ -169,31 +205,18 @@ const HomeScreen = ({navigation}) => {
                 </View>
                 <View>
                   <TouchableOpacity
-                      onPress={() => navigation.navigate('Appointment')}
+                      onPress={() => navigation.navigate('AnotherScreen')}
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Image
                         source={require('../assets/mechanic1.png')} 
                         resizeMode='contain'
-                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
+                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15, width: 120 ,height: 150}} 
                       />
                     
                         <Text style={{marginTop: 10, fontWeight: 500}}>Danny Ryan</Text>
                   </TouchableOpacity>
                 </View>
-                <View>
-                  <TouchableOpacity
-                      onPress={() => navigation.navigate('Appointment')}
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <Image
-                        source={require('../assets/mechanic1.png')} 
-                        resizeMode='contain'
-                        style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15}} 
-                      />
-                    
-                        <Text style={{marginTop: 10, fontWeight: 500}}>John Jamie</Text>
-                  </TouchableOpacity>
-                </View>
-                
+                                
               </View>
            </View>
 
@@ -281,7 +304,10 @@ const HomeScreen = ({navigation}) => {
                 <Text style={{color: 'white', marginLeft: 10}}>30 mins test drive including motorway.</Text>
                 
             </View>
-            <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25, marginTop: 10}}>€180</Text>
+            <Divider style={{ backgroundColor: 'blue', marginTop: 10 }} />
+            
+
+            <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25, marginTop: 5,}}>Price: €180</Text>
             <TouchableOpacity 
                 title="Login" 
                 style={styles.button}
@@ -291,14 +317,14 @@ const HomeScreen = ({navigation}) => {
             
           </View>
 
-            {/* /////////////..SILVER..///////////// */}
+            {/* /////////////..ELITE..///////////// */}
             <View
               style={{
                 borderRadius: '20',  
                 padding: 20,
                 marginTop: 20,
-                borderWidth: '0.3'
-                
+                borderWidth: '0.3',
+                marginBottom: 30
                 
             
               }}
@@ -344,7 +370,7 @@ const HomeScreen = ({navigation}) => {
                   marginLeft: 12
                 }}
               > 
-                <Ionicons name="close-circle" size={20} color="#cc0000" />
+                <Ionicons name="close-circle" size={20} color="grey" />
                 <Text style={{ marginLeft: 10}}>12v Battery health check</Text>
               </View>
               <View
@@ -355,7 +381,7 @@ const HomeScreen = ({navigation}) => {
                   marginLeft: 12
                 }}
               > 
-              <Ionicons name="close-circle" size={20} color="#cc0000" />
+              <Ionicons name="close-circle" size={20} color="grey" />
                 <Text style={{ marginLeft: 10}}>Diagnostic Scan / Health Scan</Text>
               </View>
               <View
@@ -366,10 +392,13 @@ const HomeScreen = ({navigation}) => {
                   marginLeft: 12
                 }}
               > 
-                <Ionicons name="close-circle" size={20} color="#cc0000" />
+                <Ionicons name="close-circle" size={20} color="grey" />
                 <Text style={{ marginLeft: 10}}>Motorway test drive</Text>
               </View>
-              <Text style={{color: 'black', fontWeight: '600',marginLeft: 12, fontSize: 25, marginTop: 10}}>€100</Text>
+              <Divider style={{ backgroundColor: 'blue', marginTop: 10 }} />
+
+              <Text style={{color: 'black', fontWeight: '600',marginLeft: 12, fontSize: 25, marginTop: 10, marginBottom: 10}}>Price: €100</Text>
+
               
               <TouchableOpacity 
                 title="Get S" 
@@ -383,7 +412,7 @@ const HomeScreen = ({navigation}) => {
            
       
       </View> 
-         </ScrollView>
+      </ScrollView>
     </SafeAreaProvider>
   )
 }
@@ -396,7 +425,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-  
     
   },
   shadow: {
@@ -439,7 +467,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontWeight: '600',
     color: 'white',
-    fontSize: 18,
+    fontSize: 22,
     alignItems: 'center',
     
   }

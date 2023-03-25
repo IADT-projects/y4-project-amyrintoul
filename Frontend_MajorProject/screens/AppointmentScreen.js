@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 
@@ -18,15 +19,17 @@ const mechanic = [
 
 const AppointmentScreen = () => {
   const [value, setValue] = useState(null);
-  const [value1, setMechanicValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const [value1, setValue1] = useState(null);
+
+    const [isFocus, setIsFocus] = useState(false);
 
 
     
 
     
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
+
        <Dropdown
           style={[styles.dropdownMechanic, isFocus && { borderColor: '#213681' }]}
           placeholderStyle={styles.placeholderStyleMechanic}
@@ -44,7 +47,7 @@ const AppointmentScreen = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setMechanicValue(item.value1);
+            setValue1(item.value1);
             setIsFocus(false);
           }}
           renderLeftIcon={() => (
@@ -104,12 +107,12 @@ const AppointmentScreen = () => {
             />
         </View>  
         <TouchableOpacity 
-          title="Login" 
+          title="BookApoointment" 
           style={styles.button}
           >
           <Text style={styles.text}>Book Appointment</Text>
         </TouchableOpacity>  
-    </View>
+    </SafeAreaProvider>
   )
 }
 
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-  
+    
   },
   sectionStyle: {
     flexDirection: 'row',
