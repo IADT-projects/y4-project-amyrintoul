@@ -6,44 +6,58 @@ import { StyleSheet,
           TouchableOpacity,
 } from 'react-native'
 import axios from 'axios'
-import React from 'react'
 import { PageTitle, SubTextRegister, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useContext, useState } from 'react'
 
 
 
-const RegisterScreen = ({navigation, props}) => {
-  const [email, setEmail] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  
+
+const RegisterScreen = ({navigation, props, onisLoggedin}) => {
+  const [email, setEmail] = React.useState('arintoul@moooooo.ie');
+  const [name, setName] = React.useState('Amy Johnson');
+  const [password, setPassword] = React.useState('secret');
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleForm = (e) => {
+    let full_name = e.target.full_name;
+    let value = e.target.value;
+
+     console.log(`${full_name}: ${value}`);
+
+   
+    setForm(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
 
   const submitForm = () => {
     console.log("Name: ", name);
     console.log("Email: ", email);
     console.log("Password: ", password);
     
-
-
-    axios.post('/users/register', {
-            name: name,
-            email: email,
-            password: password
-            
-        })
-         .then((response) => {
+    axios.post('http://192.168.0.227:3000/api/users/register/', {
+              name: name,
+              email: email,
+              password: password
+          })
+          .then((response) => {
             console.log(response.data);
+            navigation.replace('Login'),
+          
             setErrorMessage("");
-            props.onAuthenticated(true, response.data.token);
-         })
-         .catch((err) => {
+            onisLoggedin(true, response.data.token);
+        })
+        .catch((err) => {
             console.error(err);
-            // console.log(err.response.data);
-            // setErrorMessage(err.response.data.message);
-         });
+            console.log(err.response.data);
+            setErrorMessage(err.response.data.message);
+        
+        });
 };
   return (
     <LinearGradient
@@ -55,7 +69,7 @@ const RegisterScreen = ({navigation, props}) => {
         locations={[0, 0.22, 0.6, 1]}
       >
          
-        <PageTitle>Create An Account</PageTitle>
+        <PageTitle>Register</PageTitle>
         <SubTextRegister>Please enter the details below!</SubTextRegister>
 
         <View> 
