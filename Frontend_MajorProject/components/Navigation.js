@@ -10,8 +10,11 @@ import SecondScreen from '../screens/SecondScreen';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import Tabs from '../navigation/tabs'
 import { getData, storeData, removeData, getAllData } from '../config/localStorage';
-import AnotherScreen from '../screens/AnotherScreen';
-
+import MechanicProfile from '../screens/MechanicProfile';
+import ReportScreen from '../screens/ReportScreen';
+import AppointmentScreen from '../screens/AppointmentScreen';
+import SingleReport from './SingleReport';
+import BlogPost from './BlogPosts';
 //creates the stack, components used for configuring the navigator
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +42,7 @@ export default function Navigation() {
   }, []);
 
 
-  const onisLoggedin = (auth, token) => {
+  const onisLoggedin = (auth, token, mechanic = false) => {
 
     // console.log("AUTH: ", auth);
     // console.log("Token: ", token);
@@ -47,6 +50,7 @@ export default function Navigation() {
 
     if(auth){
       storeData('token', token).then(data => {
+        setIsMechanic(mechanic)
         console.log("redirect to welcome")
       })
       .catch(e => console.log(e));;
@@ -63,30 +67,31 @@ export default function Navigation() {
   return (
     
     <NavigationContainer>
-        {/* if logged in is true, show homepage otherwise show the other screns */}
-
-
+        {/* if logged in is true, show homepage otherwise show the other screens */}
         {isLoggedin ? 
         <Stack.Navigator initialRouteName="Root" screenOptions={{headerShown: false}}>
 
         <Stack.Screen name="Root">
           {props => <Tabs {...props} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />}
         </Stack.Screen>
-        <Stack.Screen name="AnotherScreen"component={AnotherScreen} screenOptions={{headerShown: true}}/>
+        <Stack.Screen name="MechanicProfile" component={MechanicProfile} screenOptions={{headerShown: true}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+        <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+        <Stack.Screen name="ReportScreen" component={ReportScreen} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+        <Stack.Screen name="SingleReport" component={SingleReport} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+        <Stack.Screen name="BlogPost" component={BlogPost} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+
 
 
         </Stack.Navigator> : 
         <Stack.Navigator screenOptions={{headerShown: false}} >
-
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
             <Stack.Screen name="SecondScreen" component={SecondScreen} />
             <Stack.Screen name="Login">
             {props => <LoginScreen {...props} onisLoggedin={onisLoggedin} />}
             </Stack.Screen>
-            
             <Stack.Screen name="Register" component={RegisterScreen} /> 
             
-            </Stack.Navigator>}
+        </Stack.Navigator>}
 
 
 

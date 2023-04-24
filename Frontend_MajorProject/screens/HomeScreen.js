@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { Entypo } from '@expo/vector-icons';
@@ -7,11 +7,116 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Divider } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'
+
+import { getData, storeData, removeData, getAllData } from '../config/localStorage';
 
 
+const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
+ 
+  const [ services, setServices ] = useState([]);
 
 
-const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
+  const [ appointments, setAppointments ] = useState([]);
+    useEffect(() => {
+      getData('token')
+        .then((token) => {
+          axios.get('http://192.168.0.227:3000/api/apps/', {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          })
+          .then((res) => {
+            console.log(res)
+            setAppointments(res.data)
+          })
+          .catch((err) => {
+            console.error(err)
+            console.log(err.response.data.message)
+          })
+        })
+        .catch((err) => {
+          console.error(err)
+          
+        })
+      
+        
+    }, []);
+  const appointmentList = appointments.map((appointment) => {
+    let time_object = new Date();
+    time_object.setTime(Date.parse( appointment.start_time ));
+
+    let min = time_object.getUTCMinutes();
+    let hour = time_object.getUTCHours();
+   
+    
+
+    return (
+      <View
+      style={styles.appointmentBorder}
+    >  
+      <View>
+        <View style={{flexDirection: 'row' }}> 
+          <Ionicons name="ios-car-sharp" size={24} color="black" />
+          <Text style={{ fontSize: 22, fontWeight: '300', marginLeft: 5}} key={appointment.id}>{appointment.vehicle.make}</Text>
+          <Text style={{marginLeft: 5, fontSize: 22, fontWeight: '300',}} key={appointment.id}>{appointment.vehicle.model}</Text>
+        </View>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+          <Text style={styles.appointmentText}>Reg:</Text>
+          <Text style={{ fontSize: 16, fontWeight: '300',}} key={appointment.id}> {appointment.vehicle.reg}</Text>
+        </View>
+        <View style={{flexDirection: 'row', marginTop: 5}}>
+            <Text style={styles.appointmentText}>Mechanic:</Text>
+            <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5, marginLeft: 5 }}>Danny Thomas </Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.appointmentText}>Service:</Text>
+          <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5}} key={appointment.id}> {appointment.service.title}</Text>
+        </View>
+        <Divider style={styles.dividerStyle } />
+
+        <View flexDirection="row">
+          <AntDesign name="clockcircle" size={14} color="#6A5BFF" style={{marginTop: 1, marginRight: 3,}}/>  
+          <Text style={{color: '#6A5BFF', fontWeight: 400, fontSize: '14px', marginLeft: 2}} key={appointment.id}>{hour}:{min}</Text> 
+          {/* <Text style={{color: '#6A5BFF', fontWeight: 400, fontSize: '14'}} key={appointment.id}>{appointment.end_time}</Text>  */}
+        </View>
+      </View>
+      <View
+        style={styles.dateBackground}
+      >
+        {/* <Text style={styles.dateText}key={appointment.id}>{appointment.date}12</Text> */}
+        <Text style={styles.dateText}>12</Text>
+        <Text style={styles.dateText}>Nov</Text>
+      </View>
+    </View>
+   )
+ });
+ useEffect(() => {
+  getData('token')
+    .then((token) => {
+      axios.get(`http://192.168.0.227:3000/api/services/`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        console.log(res)
+        setServices(res.data)
+      })
+      .catch((err) => {
+        console.error(err)
+        console.log(err.response.data.message)
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+      
+    })
+  
+    
+}, []);
+ 
 
   return (
     <SafeAreaProvider style={styles.container}>
@@ -49,10 +154,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
                 borderRadius: '25',  
                 alignItems: 'center',
                 padding: 10,
-                ...styles.shadow
-                
-                
-            
+                ...styles.shadow   
               }}
             >  
             <View >
@@ -65,7 +167,9 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
              <View style={{padding: 15, marginRight:10}}>
              <Text style={{color: 'white', marginTop: 10, fontSize: 20, fontWeight: '500'}}>Simply ways for{'\n'}a healthier cars</Text>
               <Text style={{color: 'white', marginTop: 5}}>Click here to view more {'\n'}about this</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('BlogPost')}
+              >
               <View style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
               <Entypo name="forward" size={24} color="white"  />
               </View>   
@@ -80,77 +184,10 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
               }}
             >
               <Text 
-              style={{
-                fontSize: 18, 
-                fontWeight: 500, 
-                letterSpacing: 1, 
-                marginTop: 10,
-                }}>
+              style={styles.appointmentTitle}>
                   Upcoming Appointments
               </Text>
-              <View
-                style={{
-                  flexDirection: 'row', 
-                  justifyContent: 'space-between',
-                  borderRadius: '20',  
-                  alignItems: 'center',
-                  padding: 20,
-                  marginTop: 20,
-                  borderWidth: '0.2',
-                  borderColor: '#748c94'
-                }}
-              >  
-                <View>
-                  <View style={{flexDirection: 'row' }}> 
-                    <Text style={{fontSize: 18, fontWeight: '500',}}>Mechanic: </Text>
-                    <Text style={{marginLeft: 5, fontSize: 18, fontWeight: '300',}}>Danny Ryan</Text>
-                  </View>
-
-
-                  <View style={{flexDirection: 'row', marginTop: 5}}>
-                    <View style={{flexDirection: 'row', marginTop: 5}}>
-                      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 5, }}>
-                        Make: 
-                      </Text>
-                      <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5, marginLeft: 5 }}>
-                        Audi A1.
-                      </Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 8}}>
-                      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 5, }}>
-                        Reg: 
-                      </Text>
-                      <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5, marginLeft: 5 }}>
-                        131-D-29019.
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 5}}>
-                    Service: 
-                  </Text>
-                  <Text style={{fontSize: 16, fontWeight: '300', marginBottom: 5}}> Elite</Text>
-                  </View>
-                  <Divider style={{ backgroundColor: 'blue', marginTop: 5, marginBottom: 5 }} />
-
-                  <View flexDirection="row">
-                  <AntDesign name="clockcircle" size={14} color="#6A5BFF" style={{marginTop: 1, marginRight: 3,}}/>  
-                  <Text style={{color: '#6A5BFF', fontWeight: 400, fontSize: 14}}>12:00am, 40mins</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    borderRadius: '10',  
-                    backgroundColor: '#6A5BFF',
-                    alignItems: 'center',
-                    padding: 10,
-                    marginRight: 5
-                  }}
-                >
-                  <Text style={styles.dateText}>12</Text>
-                  <Text style={styles.dateText}>Nov</Text>
-                </View>
-              </View>
+              { appointmentList }
             
            </View>
               {/* ..........MEET THE TEAM............ */}
@@ -179,7 +216,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
                 <View >
                 <TouchableOpacity
                     title="Mechanic"
-                    onPress={() => navigation.navigate('AnotherScreen')} 
+                    onPress={() => navigation.navigate('MechanicProfile')} 
                      style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Image
                         source={require('../assets/mechanic1.png')} 
@@ -191,7 +228,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
                 </View>
                 <View>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('AnotherScreen')}
+                    onPress={() => navigation.navigate('MechanicProfile')}
                     style={{justifyContent: 'center', alignItems: 'center'}}>
                     <Image
                       resizeMode='contain'
@@ -205,7 +242,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
                 </View>
                 <View>
                   <TouchableOpacity
-                      onPress={() => navigation.navigate('AnotherScreen')}
+                      onPress={() => navigation.navigate('MechanicProfile')}
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Image
                         source={require('../assets/mechanic1.png')} 
@@ -237,85 +274,58 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
                   Choose a service
               </Text>
            </View>
-           {/* /////////////..GOLD..///////////// */}
-          <View 
-           style={{
-            backgroundColor: '#213681', 
-            borderRadius: '20',  
-            padding: 20,
-            marginTop: 10
-            
-            }}
+           {/* /////////////..PREMIUM..///////////// */}
+           <View 
+           style={styles.premiumService}
           >
             <View
-              style={{
-                flexDirection: 'row', 
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
+              style={styles.alignment}
             >
-              <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25}}>Premium</Text>
+              <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25}} >Premium</Text>
               <MaterialCommunityIcons name="podium-gold" size={32} color="white" style={{marginRight: 12}} />
             </View>
             <View
-                style={{
-                  flexDirection: 'row', 
-                  alignItems: 'center',
-                  marginTop: 15,
-                  marginLeft: 12
-                }}
+                style={styles.listAlignment}
             > 
-                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
-                <Text style={{color: 'white', marginLeft: 10}}>100 Point check over</Text>
+                <Ionicons name="ios-shield-checkmark" style={styles.premiumIconStyle} />
+                <Text style={styles.textServiceStyle}>100 Point check</Text>
             </View>
             <View
-                style={{
-                  flexDirection: 'row', 
-                  alignItems: 'center',
-                  marginTop: 5,
-                  marginLeft: 12
-                }}
+                style={styles.listStyle}
             > 
-                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
-                <Text style={{color: 'white', marginLeft: 10}}>Diagnostic scan/ health check</Text>
+                <Ionicons name="ios-shield-checkmark" style={styles.premiumIconStyle} />
+                <Text style={styles.textServiceStyle}>Diagnostic scan/ health check</Text>
                 
             </View>
             <View
-                style={{
-                  flexDirection: 'row', 
-                  alignItems: 'center',
-                  marginTop: 5,
-                  marginLeft: 12
-                }}
+                style={styles.listStyle}
             > 
-                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
-                <Text style={{color: 'white', marginLeft: 10}}>12v battery health check</Text>
+                <Ionicons name="ios-shield-checkmark" style={styles.premiumIconStyle} />
+                <Text style={styles.textServiceStyle}>12v battery health check</Text>
                 
             </View>
             <View
-                style={{
-                  flexDirection: 'row', 
-                  alignItems: 'center',
-                  marginTop: 5,
-                  marginLeft: 12
-                }}
+                style={styles.listStyle}
             > 
-                <Ionicons name="ios-shield-checkmark" size={20} color="#75BEF4" />
-                <Text style={{color: 'white', marginLeft: 10}}>30 mins test drive including motorway.</Text>
+                <Ionicons name="ios-shield-checkmark" style={styles.premiumIconStyle} />
+                <Text style={styles.textServiceStyle}>30 mins test drive including motorway.</Text>
                 
             </View>
             <Divider style={{ backgroundColor: 'blue', marginTop: 10 }} />
-            
-
-            <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25, marginTop: 5,}}>Price: €180</Text>
+        
+            <Text style={{color: 'white', fontWeight: '600', marginLeft: 12, fontSize: 25, marginTop: 5,}} 
+            >Price: &euro;180</Text>
             <TouchableOpacity 
                 title="Login" 
                 style={styles.button}
+                onPress={() => navigation.navigate('AppointmentScreen')}
+
                 >
                 <Text style={styles.text}>Get Started</Text>
               </TouchableOpacity> 
             
           </View>
+          
 
             {/* /////////////..ELITE..///////////// */}
             <View
@@ -403,6 +413,8 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic}) => {
               <TouchableOpacity 
                 title="Get S" 
                 style={styles.buttonElite}
+                onPress={() => navigation.navigate('AppointmentScreen')}
+
                 >
                 <Text style={styles.text}>Get Started</Text>
               </TouchableOpacity> 
@@ -464,13 +476,83 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
     
   },
+  appointmentTitle: {
+    fontSize: 18, 
+    fontWeight: 500, 
+    letterSpacing: 1, 
+    marginTop: 10,
+  },
   dateText: {
     fontWeight: '600',
     color: 'white',
-    fontSize: 22,
+    fontSize: 25,
     alignItems: 'center',
     
+  },
+  timeText:{
+    color: '#6A5BFF', 
+    fontWeight: 400, 
+    fontSize: 14
+  },
+  dividerStyle: {
+    backgroundColor: 'blue', 
+    marginTop: 5, 
+    marginBottom: 5
+  },
+  appointmentBorder: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    borderRadius: '20',  
+    alignItems: 'center',
+    padding: 20,
+    marginTop: 20,
+    borderWidth: '0.2',
+    borderColor: '#748c94'
+  },
+  dateBackground: {
+    borderRadius: '10',  
+    backgroundColor: '#6A5BFF',
+    alignItems: 'center',
+    padding: 25,
+    marginRight: 5
+  },
+  premiumService: {
+    backgroundColor: '#213681', 
+    borderRadius: '20',  
+    padding: 20,
+    marginTop: 10 
+  },
+  alignment: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  listAlignment: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    marginTop: 15,
+    marginLeft: 12
+  },
+  listStyle: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    marginTop: 5,
+    marginLeft: 12
+  }, 
+  textServiceStyle: {
+    color: 'white', 
+    marginLeft: 10
+  },
+  premiumIconStyle: {
+    fontSize: 20,
+    color:'#75BEF4' 
+  },
+  appointmentText: {
+    fontSize: 16, 
+    fontWeight: '600', 
+    marginBottom: 5,
   }
+ 
  
   
 })

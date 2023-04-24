@@ -8,7 +8,6 @@ import HomeScreen from "../screens/HomeScreen";
 import { StyleSheet, Text, TouchableOpacity, View, Alert, Image} from "react-native";
 import { StatusBar} from "expo-status-bar";
 import { SimpleLineIcons } from '@expo/vector-icons';
-import AnotherScreen from "../screens/AnotherScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +19,7 @@ function LogoTitle() {
   );
 }
 
-const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
+const Tabs = ({navigation, onisLoggedin, isLoggedin, isMechanic}) => {
 
   const showAlert = () => 
   Alert.alert(
@@ -73,7 +72,7 @@ const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
         }
       }}>
         
-        <Tab.Screen name='Home' children={() => <HomeScreen isLoggedin={isLoggedin} isMechanic={isMechanic}  />} 
+        <Tab.Screen name='Home' children={() => <HomeScreen navigation={navigation} isLoggedin={isLoggedin} isMechanic={isMechanic}  />} 
           options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size, focused }) => (
@@ -83,7 +82,7 @@ const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
           ),
         }}/>
         
-      <Tab.Screen name='Reports' component={ReportScreen}  
+      <Tab.Screen name='Reports' children={() => <ReportScreen navigation={navigation} isLoggedin={isLoggedin} isMechanic={isMechanic}  />} 
           options={{
           tabBarIcon: ({ color, size, focused}) => (
             <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
@@ -96,7 +95,6 @@ const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
       
          options={{
           headerTitle: 'Book An Appointment',
-          
           tabBarIcon: ({ size, focused}) => (
             <View style={{ width: 50,
               height: 50,
@@ -116,23 +114,13 @@ const Tabs = ({onisLoggedin, isLoggedin, isMechanic}) => {
           />         
           
         }} />
-      <Tab.Screen name='Chat' component={AnotherScreen} options={{ 
+      <Tab.Screen name='Chat' component={ChatScreen} options={{ 
         tabBarIcon: ({focused,  size}) => (
           <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
              <Ionicons name="chatbox-ellipses-outline" size={size} style={{color: focused ? '#6A5BFF' : '#748c94'}}/>
             
           </View>
         ),
-        headerShown: true,
-        headerTitle: (props) => <LogoTitle {...props} />,
-        headerStyle: {
-            backgroundColor: '#213681',
-            borderRadius: 2,
-            height: 220,
-            borderBottomRightRadius: 3000,
-            borderBottomLeftRadius: 3000,
-          },
-          headerTintColor: '#fff',
         }}
       />
       <Tab.Screen name='Logout' component={ChatScreen} options={{ 

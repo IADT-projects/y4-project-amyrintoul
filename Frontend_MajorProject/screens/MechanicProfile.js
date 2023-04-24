@@ -2,13 +2,16 @@ import { StyleSheet, Text, TouchableOpacity, View, StatusBar, Image} from 'react
 import React from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import { Avatar } from 'react-native-elements';
+import Tabs from '../navigation/tabs';
 
-
-const AnotherScreen = () => {
+const MechanicProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
        <StatusBar style="light"/>
-      <View style={{backgroundColor: 'white', borderRadius: 20,  padding: 40,...styles.shadow}}>
+       <View>
+      <Text style={{marginLeft: 30, fontSize: 30, marginTop: 20, fontWeight: 600}}>Mechanic Profile</Text>
+    </View>
+      <View style={{backgroundColor: 'white', borderRadius: 20,  padding: 40, marginTop: 50,...styles.shadow}}>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <Avatar
             size="medium"
@@ -45,24 +48,25 @@ const AnotherScreen = () => {
         <TouchableOpacity 
           title="Book Appointment" 
           style={styles.buttonApp}
+          onPress={() => navigation.navigate('AppointmentScreen')}
+
+          
         >
           <Text style={styles.buttonText}>Book Appointment</Text>
         </TouchableOpacity> 
-
-
       </View>
-      
     </View>
   )
 }
 
-export default AnotherScreen
+export default MechanicProfile
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white'
   },
   buttonApp: {
     backgroundColor: '#6A5BFF',

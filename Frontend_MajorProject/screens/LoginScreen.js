@@ -14,30 +14,30 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const LoginScreen = ({navigation, onisLoggedin}) => {
-    const [email, setEmail] = useState('rintoulamy7@gmail.com');
+    const [email, setEmail] = useState('mechanica@gmail.com');
     const [password, setPassword] = useState('password');
    
 
     const [errorMessage, setErrorMessage] = useState("");
 
-    const handleForm = (e) => {
-      let name = e.target.name;
-      let value = e.target.value;
-      console.log(`${name}: ${value}`);
+  //   const handleForm = (e) => {
+  //     let name = e.target.name;
+  //     let value = e.target.value;
+  //     console.log(`${name}: ${value}`);
 
-      // setForm((prevState) => {
-      //     return {
-      //         ...prevState,
-      //         [name]: value
-      //     }
-      // });
+  //     // setForm((prevState) => {
+  //     //     return {
+  //     //         ...prevState,
+  //     //         [name]: value
+  //     //     }
+  //     // });
 
-      setForm(prevState => ({
-          ...prevState,
-          [name]: value
-      }))
+  //     setForm(prevState => ({
+  //         ...prevState,
+  //         [name]: value
+  //     }))
       
-  };
+  // };
 
     const submitForm = () => {
       console.log("Email: ", email);
@@ -50,7 +50,12 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
           .then((response) => {
             console.log(response.data);
             setErrorMessage("");
-            onisLoggedin(true, response.data.token);
+            let mechanic = false
+            if(response.data.user.mechanic) {
+              mechanic = true
+            }
+            onisLoggedin(true, response.data.token, mechanic);
+            console.log(mechanic, 'mechanic = mechanic')
         })
         .catch((err) => {
             console.error(err);
@@ -84,8 +89,9 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
               style={{flex: 1}}
               placeholder="Email"
               required
-               onChange={handleForm}
+              // onChange={handleForm}
               underlineColorAndroid="transparent"
+              value={email}
             />
         </View>
       
@@ -97,7 +103,8 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
               placeholder="Password"
               required
               secureTextEntry={true}           
-              onChange={handleForm}
+              // onChange={handleForm}
+              value={password}
 
             />
         </View>     

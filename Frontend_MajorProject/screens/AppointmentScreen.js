@@ -4,6 +4,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Button } from 'react-native'
+import DatePicker from 'react-native-date-picker'
 
 
 
@@ -20,16 +22,26 @@ const mechanic = [
 const AppointmentScreen = () => {
   const [value, setValue] = useState(null);
   const [value1, setValue1] = useState(null);
-
-    const [isFocus, setIsFocus] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
 
     
 
     
   return (
-    <SafeAreaProvider style={styles.container}>
 
+    <SafeAreaProvider style={styles.container}>
+       <Text 
+              style={{
+                fontSize: 26, 
+                fontWeight: 500, 
+                letterSpacing: 1, 
+                padding: 10, 
+                marginBottom: 10
+              }}
+            >
+              Book An Appointment
+        </Text>
        <Dropdown
           style={[styles.dropdownMechanic, isFocus && { borderColor: '#213681' }]}
           placeholderStyle={styles.placeholderStyleMechanic}
@@ -106,7 +118,31 @@ const AppointmentScreen = () => {
 
             />
         </View>  
-        <TouchableOpacity 
+        <View style={styles.sectionStyle}>
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Date"
+              required
+
+            />
+        </View>  
+        <View style={styles.sectionStyle}>
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Time"
+              required
+
+            />
+        </View>  
+        <View style={styles.sectionStyle}>
+            <TextInput
+              style={{flex: 1}}
+              placeholder="End Time"
+              required
+
+            />
+        </View>  
+       <TouchableOpacity 
           title="BookApoointment" 
           style={styles.button}
           >
