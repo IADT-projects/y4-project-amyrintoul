@@ -11,7 +11,6 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <Navigation />
-      <StatusBar style="light" />
       </SafeAreaProvider>
   )
 }

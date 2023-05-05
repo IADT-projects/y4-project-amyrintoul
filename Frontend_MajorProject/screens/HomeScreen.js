@@ -8,12 +8,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Divider } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios'
+import axios from '../config'
 
 import { getData, storeData, removeData, getAllData } from '../config/localStorage';
 
 
-const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
+const HomeScreen = ({ navigation, isLoggedin, isMechanic, props, authUser}) => {
  
   const [ services, setServices ] = useState([]);
 
@@ -22,7 +22,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
     useEffect(() => {
       getData('token')
         .then((token) => {
-          axios.get('http://192.168.0.227:3000/api/apps/', {
+          axios.get('/apps/', {
             headers: {
               "Authorization": `Bearer ${token}`
             }
@@ -95,7 +95,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
  useEffect(() => {
   getData('token')
     .then((token) => {
-      axios.get(`http://192.168.0.227:3000/api/services/`, {
+      axios.get(`/services/`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -143,7 +143,7 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
                 marginBottom: 10
               }}
             >
-              Hi Christine,{'\n'}Welcome Back!
+              Hi {authUser?.name},{'\n'}Welcome Back!
             </Text>
             {/* .....CARD...... */}
             <View
@@ -231,9 +231,8 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
                     onPress={() => navigation.navigate('MechanicProfile')}
                     style={{justifyContent: 'center', alignItems: 'center'}}>
                     <Image
-                      resizeMode='contain'
-                      source={require('../assets/mechanic1.png')} 
-                      
+                      // resizeMode='contain'
+                      source={require('../assets/mechanic2.png')} 
                       style={{ marginTop:10, backgroundColor: '#213681', borderRadius: 15,width: 120 ,height: 150}} 
                     />
                   
@@ -245,8 +244,8 @@ const HomeScreen = ({ navigation, isLoggedin, isMechanic, props}) => {
                       onPress={() => navigation.navigate('MechanicProfile')}
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Image
-                        source={require('../assets/mechanic1.png')} 
-                        resizeMode='contain'
+                        source={require('../assets/mechanic3.png')} 
+                        // resizeMode='contain'
                         style={{ marginTop:10, backgroundColor: '#75BEF4', borderRadius: 15, width: 120 ,height: 150}} 
                       />
                     

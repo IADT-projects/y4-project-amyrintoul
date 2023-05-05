@@ -22,6 +22,7 @@ export default function Navigation() {
     //set loggedin to false
     const [isLoggedin, setIsLoggedIn] = useState(false);
     const [isMechanic, setIsMechanic] = useState(false);
+    const [authUser, setAuthUser] = useState({});
 
     
     // const [token, setToken] = useState(null);
@@ -41,8 +42,39 @@ export default function Navigation() {
 
   }, []);
 
+  useEffect(() => {
+    getData('mechanic')
+      .then(data => {
+        if(data){
+          let boolStr = (data === "true");
+          setIsMechanic(boolStr);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
 
-  const onisLoggedin = (auth, token, mechanic = false) => {
+    getAllData().then(data => console.log(data))
+
+}, []);
+
+useEffect(() => {
+  getData('authUser')
+    .then(data => {
+      if(data){
+        setAuthUser(JSON.parse(data));
+      }
+    })
+    .catch(e => {
+      console.log(e);
+    });
+
+  getAllData().then(data => console.log(data))
+
+}, []);
+
+
+  const onisLoggedin = (auth, token, mechanic = false, user = {}) => {
 
     // console.log("AUTH: ", auth);
     // console.log("Token: ", token);
@@ -53,10 +85,31 @@ export default function Navigation() {
         setIsMechanic(mechanic)
         console.log("redirect to welcome")
       })
-      .catch(e => console.log(e));;
+      .catch(e => console.log(e));
+
+      storeData('mechanic', mechanic.toString()).then(data => {
+        console.log("redirect to welcome")
+      })
+      .catch(e => console.log(e));
+
+      storeData('authUser', JSON.stringify(user)).then(data => {
+        setAuthUser(JSON.parse(data))
+        console.log("redirect to welcome")
+      })
+      .catch(e => console.log(e));
     }
     else{
       removeData('token')
+        .then(data => {
+          console.log("redirect to login")
+        })
+        .catch(e => console.log(e));
+        removeData('mechanic')
+        .then(data => {
+          console.log("redirect to login")
+        })
+        .catch(e => console.log(e));
+        removeData('authUser')
         .then(data => {
           console.log("redirect to login")
         })
@@ -69,12 +122,12 @@ export default function Navigation() {
     <NavigationContainer>
         {/* if logged in is true, show homepage otherwise show the other screens */}
         {isLoggedin ? 
-        <Stack.Navigator initialRouteName="Root" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="Root" screenOptions={{headerShown: false,}}>
 
-        <Stack.Screen name="Root">
-          {props => <Tabs {...props} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />}
+        <Stack.Screen name="Home" screenOptions={{headerShown: true,}}>
+          {props => <Tabs {...props} authUser={authUser} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />}
         </Stack.Screen>
-        <Stack.Screen name="MechanicProfile" component={MechanicProfile} screenOptions={{headerShown: true}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
+        <Stack.Screen name="MechanicProfile" component={MechanicProfile} screenOptions={{headerShown: true, }} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
         <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
         <Stack.Screen name="ReportScreen" component={ReportScreen} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />
         <Stack.Screen name="SingleReport" component={SingleReport} screenOptions={{headerShown: false}} onisLoggedin={onisLoggedin} isLoggedin={isLoggedin} isMechanic={isMechanic} />

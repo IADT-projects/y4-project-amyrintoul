@@ -3,11 +3,12 @@ import { StyleSheet,
           View,
           Text,
           TouchableOpacity,
+          Image
         } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { PageTitle, SubText, Background} from '../components/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios'
+import axios from '../config'
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,6 +17,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const LoginScreen = ({navigation, onisLoggedin}) => {
     const [email, setEmail] = useState('mechanica@gmail.com');
     const [password, setPassword] = useState('password');
+
    
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -43,7 +45,7 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
       console.log("Email: ", email);
       console.log("Password: ", password);
 
-      axios.post('http://192.168.0.227:3000/api/users/login/', {
+      axios.post('/users/login/', {
               email: email,
               password: password
           })
@@ -54,7 +56,7 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
             if(response.data.user.mechanic) {
               mechanic = true
             }
-            onisLoggedin(true, response.data.token, mechanic);
+            onisLoggedin(true, response.data.token, mechanic, response.data.user);
             console.log(mechanic, 'mechanic = mechanic')
         })
         .catch((err) => {
@@ -64,7 +66,7 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
         
         });
 
-  };
+     };
 
 
 
@@ -77,7 +79,7 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
         end={{x: 1, y: 1}}
         locations={[0, 0.22, 0.6, 1]}>
         
-            
+        
         <PageTitle>Login Now</PageTitle>
         <SubText>Sign in to your account!</SubText>
         
@@ -88,8 +90,9 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
             <TextInput
               style={{flex: 1}}
               placeholder="Email"
+              name="email"
               required
-              // onChange={handleForm}
+              onChange={(e) => setEmail(e.target.value)}
               underlineColorAndroid="transparent"
               value={email}
             />
@@ -103,7 +106,7 @@ const LoginScreen = ({navigation, onisLoggedin}) => {
               placeholder="Password"
               required
               secureTextEntry={true}           
-              // onChange={handleForm}
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
 
             />

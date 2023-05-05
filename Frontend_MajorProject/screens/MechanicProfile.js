@@ -3,20 +3,48 @@ import React from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import { Avatar } from 'react-native-elements';
 import Tabs from '../navigation/tabs';
+import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const MechanicProfile = ({navigation}) => {
+const MechanicProfile = () => {
+
+  const navigation = useNavigation();
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLargeTitle: true,
+      headerSearchBarOptions: {
+        placeholder: "Search"
+      },
+      title: 'test'
+    })
+  }, [navigation])
   return (
     <View style={styles.container}>
        <StatusBar style="light"/>
-       <View>
-      <Text style={{marginLeft: 30, fontSize: 30, marginTop: 20, fontWeight: 600}}>Mechanic Profile</Text>
-    </View>
-      <View style={{backgroundColor: 'white', borderRadius: 20,  padding: 40, marginTop: 50,...styles.shadow}}>
+       <View style={{ alignItems: 'center'}}>
+       <LinearGradient
+        style={{height: 180,alignItems: 'center',borderBottomLeftRadius: 30, borderBottomRightRadius: 30, width: 440}}      
+        colors={["#0F0445","#1F317B", "#75BEF4", "#6A5BFF"]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        locations={[0, 0.22, 1., 1]}
+    >
+        <Text style={{color: 'white', fontSize: 30, marginTop: 80, fontWeight: 600}}>Mechanic Profile</Text>
+        </LinearGradient>
+       </View>
+       
+    
+      <View style={{backgroundColor: 'white', width: 350, marginLeft: 40, borderRadius: 20,  padding: 40, marginTop: 70,...styles.shadow}}>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <Avatar
-            size="medium"
             rounded
             source={require('../assets/mechanic1.png')} 
+            style={{
+              width: 50,
+              height:70,
+              borderRadius: 80,
+              resizeMode:'contain',
+              margin:8}}
           />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -64,13 +92,11 @@ export default MechanicProfile
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white'
   },
   buttonApp: {
     backgroundColor: '#6A5BFF',
-    width: 250,
+    width: 275,
     height: 55,
     borderRadius: 15,
     alignItems: 'center',

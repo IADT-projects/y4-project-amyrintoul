@@ -32,16 +32,19 @@ const AppointmentScreen = () => {
 
     <SafeAreaProvider style={styles.container}>
        <Text 
-              style={{
-                fontSize: 26, 
-                fontWeight: 500, 
-                letterSpacing: 1, 
-                padding: 10, 
-                marginBottom: 10
-              }}
-            >
-              Book An Appointment
-        </Text>
+        style={{
+          fontSize: 26, 
+          fontWeight: 500, 
+          letterSpacing: 1, 
+          padding: 20, 
+          marginTop: 45,
+          marginBottom: 10,
+          marginLeft: 10
+        }}
+        >
+         Book An Appointment
+      </Text>
+      <View style={styles.alignItems}>
        <Dropdown
           style={[styles.dropdownMechanic, isFocus && { borderColor: '#213681' }]}
           placeholderStyle={styles.placeholderStyleMechanic}
@@ -62,16 +65,6 @@ const AppointmentScreen = () => {
             setValue1(item.value1);
             setIsFocus(false);
           }}
-          renderLeftIcon={() => (
-            
-            <MaterialIcons 
-              name="engineering" 
-              style={styles.icon}
-              color={isFocus ? '#75BEF4' : 'black'}
-              size={25}
-            />
-          
-          )}
         />
         <Dropdown
           style={[styles.dropdownService, isFocus && { borderColor: 'red' }]}
@@ -148,6 +141,7 @@ const AppointmentScreen = () => {
           >
           <Text style={styles.text}>Book Appointment</Text>
         </TouchableOpacity>  
+      </View>
     </SafeAreaProvider>
   )
 }
@@ -158,10 +152,13 @@ const styles = StyleSheet.create({
   
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
     
+  },
+  alignItems: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15
   },
   sectionStyle: {
     flexDirection: 'row',
@@ -169,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     height: 60,
-    width: 350,
+    width: 380,
     borderRadius: 15,
     margin: 10,
     borderWidth: 1,
@@ -178,7 +175,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#75BEF4',
-    width: 350,
+    width: 380,
     height: 60,
     borderRadius: 15,
     alignItems: 'center',
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 15,
     paddingHorizontal: 8,
-    width: 350,
+    width: 380,
     backgroundColor: '#213681',
     color: 'white',
   	margin: 5
@@ -209,23 +206,25 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 15,
     paddingHorizontal: 8,
-    width: 350,
+    backgroundColor: '#213681',
+    width: 380,
   	margin: 5
   },
   placeholderStyleMechanic: {
     fontSize: 16,
-    color: 'black'
+    color: 'white',
+    marginLeft: 10
 
   },
   selectedTextStyleMechanic: {
     fontSize: 16,
-    color: 'black'
-
+    color: 'white',
+    marginLeft: 15
   },
   iconStyleMechanic: {
     width: 20,
     height: 20,
-    tintColor: 'black'
+    tintColor: 'white'
   },
   icon: {
     marginRight: 5,
